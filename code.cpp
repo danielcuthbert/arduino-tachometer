@@ -1,5 +1,5 @@
 /*
- * SIMPLE ARDUINO CAR TACHOMETER
+ * SIMPLE ARDUINO CAR TACHOMETER Forked from Deepsyx to work on a 1972 Mercedes W108 280SE 6-Cylinder
  */
 
 
@@ -8,8 +8,8 @@ const int LED_GROUND_PIN      = 8;
 
 const int PINS_COUNT          = 4;
 const int LED_PINS[PINS_COUNT]        = {9,    10,   11,   12};
-const int LED_SWITCH_RPM[PINS_COUNT]  = {4000, 4500, 5000, 5500};
-const int REV_LIMITER_RPM             = 5800;
+const int LED_SWITCH_RPM[PINS_COUNT]  = {1000, 2000, 3000, 4000}; 
+const int REV_LIMITER_RPM             = 6500; /* limit on the M130 is 6500 */
 
 const int NUMBER_OF_CYLINDERS = 4;
 const int LED_UPDATE_INTERVAL = 200;
@@ -99,10 +99,10 @@ void setup() {
   Serial.begin(9600);
 }
 
-// 4 stroke engine fires every spark in 2 revolutions
+// 6 cylinders engine => 0.5 * 6 = 3 sparks per revolution
 // so calculate at what degree interval sparks fires and divide 360 by it,
 // to find the number of fires per rotation
-const int FIRES_PER_REV = (360 / (720 / NUMBER_OF_CYLINDERS));
+const int FIRES_PER_REV = (360 / (1080 / NUMBER_OF_CYLINDERS));
 
 void loop() {
   if ((millis() - lastUpdateTime) > LED_UPDATE_INTERVAL) {
